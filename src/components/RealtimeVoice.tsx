@@ -252,22 +252,25 @@ export default function RealtimeVoice({
     playGreeting();
   }, []);
 
-  function playGreeting() {
-    const text =
-      "Hi! I'm Michaelangelo's AI assistant. How can I help you today?";
+function playGreeting() {
+  const text =
+    "Hi! I'm Michaelangelo's AI assistant. I can help you explore this vBiz Me card, learn about the services, or connect with the business. What would you like to know?";
 
-    const utterance = new SpeechSynthesisUtterance(text);
+  const voices = speechSynthesis.getVoices();
 
-    utterance.onstart = () => {
-      onSpeaking?.();
-    };
+  const femaleVoice =
+    voices.find(v => v.name.includes('Female')) ||
+    voices.find(v => v.name.includes('Samantha')) ||
+    voices[0];
 
-    utterance.onend = () => {
-      startRealtime();
-    };
+  const utterance = new SpeechSynthesisUtterance(text);
 
-    speechSynthesis.speak(utterance);
-  }
+  utterance.voice = femaleVoice;
+  utterance.pitch = 1;
+  utterance.rate = 1;
+
+  speechSynthesis.speak(utterance);
+}
 
   async function startRealtime() {
     onListening?.();

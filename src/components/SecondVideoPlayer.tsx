@@ -84,7 +84,7 @@ export function SecondVideoPlayer({ onComplete }: { onComplete: () => void }) {
       )}
       <button
         onClick={onComplete}
-        className="absolute cursor-pointer top-3 right-3 bg-black/50 hover:bg-black/70 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-md transition-colors"
+        className="absolute hidden cursor-pointer  top-3 right-3 bg-black/50 hover:bg-black/70 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-md transition-colors"
       >
         Skip
       </button>
