@@ -1,12 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import IntroVideoPlayer from '@/components/IntroVideoPlayer';
 import { SecondVideoPlayer } from '@/components/SecondVideoPlayer';
 import SimliOpenAI from '@/components/SimliOpenAI';
 import { AnimatePresence } from 'framer-motion';
-import { preloadSimliToken } from '@/components/SimliOpenAI';
+import { preloadSimliToken } from "@/components/SimliOpenAI";
+
+
 import {
   Home,
   User,
@@ -40,14 +42,13 @@ import {
 } from 'lucide-react';
 // import AvatarGuide from '@/components/AvatarGuide';
 // import RealtimeVoice from '@/components/RealtimeVoice';
+// import { preloadSimliToken, preloadIceServers } from '@/components/SimliOpenAI';
 
 export default function Page() {
   const [state, setState] = useState('intro');
-  useEffect(() => {
-    if (state === 'intro') {
-      preloadSimliToken();
-    }
-  }, [state]);
+useEffect(() => {
+  preloadSimliToken();
+}, []);
   const [cardData] = useState({
     ownerName: 'Michaelangelo Casanova',
     title: 'CEO & Founder',
@@ -57,14 +58,17 @@ export default function Page() {
     website: 'www.vbizme.com',
     address: 'New Britain, CT',
   });
-  useEffect(() => {
-    if (state === 'avatar') {
-      setTimeout(() => {
-        setState('chat');
-      }, 2000);
-    }
-  }, [state]);
-
+useEffect(() => {
+  if (state === 'avatar') {
+    setTimeout(() => {
+      setState('chat');
+    }, 200);
+  }
+}, [state]);
+// useEffect(() => {
+//   preloadSimliToken();
+//   preloadIceServers();
+// }, []);
   return (
     <div className="relative w-full min-h-[100dvh] bg-[#f4f4f4] overflow-x-hidden font-sans text-slate-900 flex flex-col items-center p-2 sm:p-4 md:p-6">
       {/* Top Navigation Icons */}
@@ -230,14 +234,10 @@ export default function Page() {
         {state === 'intro' && (
           <IntroVideoPlayer onComplete={() => setState('second')} />
         )}
-      </AnimatePresence>
-      <AnimatePresence>
         {state === 'second' && (
-          <SecondVideoPlayer onComplete={() => setState('avatar')} />
+          <SecondVideoPlayer onComplete={() => setState('chat')} />
         )}
-      </AnimatePresence>
-      <AnimatePresence>
-        <SimliOpenAI visible={state === 'chat'} />
+        {state === 'chat' && <SimliOpenAI ready={state === 'chat'} />}
       </AnimatePresence>
     </div>
   );
