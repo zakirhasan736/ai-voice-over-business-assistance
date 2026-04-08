@@ -63,7 +63,7 @@ export function SecondVideoPlayer({ onComplete }: { onComplete: () => void }) {
     >
       <video
         ref={videoRef}
-        src="https://vbiz-me.netlify.app/images/AI%20vid%20intro%20final.mp4"
+        src="./images/AI vid intro final.mp4"
         playsInline
         onEnded={onComplete}
         className="w-full h-full object-cover"

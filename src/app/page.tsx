@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 
 import IntroVideoPlayer from '@/components/IntroVideoPlayer';
 import { SecondVideoPlayer } from '@/components/SecondVideoPlayer';
-import AvatarGuide from '@/components/AvatarGuide';
-import RealtimeVoice from '@/components/RealtimeVoice';
+import SimliOpenAI from '@/components/SimliOpenAI';
 import { AnimatePresence } from 'framer-motion';
+import { preloadSimliToken } from '@/components/SimliOpenAI';
 import {
   Home,
   User,
@@ -38,9 +38,16 @@ import {
   Building,
   MapPin,
 } from 'lucide-react';
+import AvatarGuide from '@/components/AvatarGuide';
+import RealtimeVoice from '@/components/RealtimeVoice';
 
 export default function Page() {
   const [state, setState] = useState('intro');
+  useEffect(() => {
+    if (state === 'intro') {
+      preloadSimliToken();
+    }
+  }, [state]);
   const [cardData] = useState({
     ownerName: 'Michaelangelo Casanova',
     title: 'CEO & Founder',
@@ -230,9 +237,7 @@ export default function Page() {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {(state === 'avatar' || state === 'chat') && (
-          <AvatarGuide state={state === 'avatar' ? 'idle' : 'chat'} />
-        )}
+        <SimliOpenAI visible={state === 'chat'} />
       </AnimatePresence>
     </div>
   );
