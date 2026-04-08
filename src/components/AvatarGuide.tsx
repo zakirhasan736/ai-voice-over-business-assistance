@@ -210,25 +210,25 @@
 //     </motion.div>
 //   );
 // }
-'use client';
+// 'use client';
 
-import { useEffect, useRef } from 'react';
-import { connectSimli } from '@/lib/simliClient';
+// import { useEffect, useRef } from 'react';
+// import { connectSimli } from '@/lib/simliClient';
 
-export default function AvatarGuide() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+// export default function AvatarGuide() {
+//   const videoRef = useRef<HTMLVideoElement>(null);
+//   const audioRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-    if (!videoRef.current || !audioRef.current) return;
+//   useEffect(() => {
+//     if (!videoRef.current || !audioRef.current) return;
 
-    connectSimli(videoRef.current, audioRef.current);
-  }, []);
+//     connectSimli(videoRef.current, audioRef.current);
+//   }, []);
 
-  return (
-    <div className="fixed bottom-6 right-6 w-48 h-48 rounded-full overflow-hidden shadow-xl bg-black">
-      <video ref={videoRef} autoPlay playsInline />
-      <audio ref={audioRef} autoPlay />
-    </div>
-  );
-}
+//   return (
+//     <div className="fixed bottom-6 right-6 w-48 h-48 rounded-full overflow-hidden shadow-xl bg-black">
+//       <video ref={videoRef} autoPlay playsInline />
+//       <audio ref={audioRef} autoPlay />
+//     </div>
+//   );
+// }

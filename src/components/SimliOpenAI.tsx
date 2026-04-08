@@ -19,6 +19,8 @@ export async function preloadSimliToken() {
     config: {
       faceId: process.env.NEXT_PUBLIC_SIMLI_FACE_ID!,
       handleSilence: true,
+      maxSessionLength: 3600,
+      maxIdleTime: 300,
     },
   });
 

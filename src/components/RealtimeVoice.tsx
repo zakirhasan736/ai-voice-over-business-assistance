@@ -432,91 +432,91 @@
 
 //   return null;
 // }
-'use client';
+// 'use client';
 
-import { useEffect, useRef } from 'react';
-import { speakSimli } from '@/lib/simliClient';
+// import { useEffect, useRef } from 'react';
+// import { speakSimli } from '@/lib/simliClient';
 
-export default function RealtimeVoice() {
-  const started = useRef(false);
+// export default function RealtimeVoice() {
+//   const started = useRef(false);
 
-  useEffect(() => {
-    if (started.current) return;
-    started.current = true;
+//   useEffect(() => {
+//     if (started.current) return;
+//     started.current = true;
 
-    start();
-  }, []);
+//     start();
+//   }, []);
 
-  async function start() {
-    const session = await fetch('/api/realtime').then(r => r.json());
+//   async function start() {
+//     const session = await fetch('/api/realtime').then(r => r.json());
 
-    const pc = new RTCPeerConnection();
-    const dc = pc.createDataChannel('oai-events');
+//     const pc = new RTCPeerConnection();
+//     const dc = pc.createDataChannel('oai-events');
 
-    // USER MIC
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-    });
+//     // USER MIC
+//     const stream = await navigator.mediaDevices.getUserMedia({
+//       audio: true,
+//     });
 
-    stream.getTracks().forEach(track => pc.addTrack(track, stream));
+//     stream.getTracks().forEach(track => pc.addTrack(track, stream));
 
-    let buffer = '';
+//     let buffer = '';
 
-    dc.onopen = () => {
-      console.log('OpenAI connected');
+//     dc.onopen = () => {
+//       console.log('OpenAI connected');
 
-      // greeting
-      dc.send(
-        JSON.stringify({
-          type: 'response.create',
-          response: {
-            modalities: ['text'],
-            instructions:
-              "Hi! I'm Michaelangelo's AI assistant. How can I help you explore this vBiz Me card today?",
-          },
-        }),
-      );
-    };
+//       // greeting
+//       dc.send(
+//         JSON.stringify({
+//           type: 'response.create',
+//           response: {
+//             modalities: ['text'],
+//             instructions:
+//               "Hi! I'm Michaelangelo's AI assistant. How can I help you explore this vBiz Me card today?",
+//           },
+//         }),
+//       );
+//     };
 
-    dc.onmessage = e => {
-      const msg = JSON.parse(e.data);
+//     dc.onmessage = e => {
+//       const msg = JSON.parse(e.data);
 
-      if (msg.type === 'response.output_text.delta') {
-        buffer += msg.delta;
-      }
+//       if (msg.type === 'response.output_text.delta') {
+//         buffer += msg.delta;
+//       }
 
-      if (msg.type === 'response.output_text.done') {
-        console.log('AI response:', buffer);
+//       if (msg.type === 'response.output_text.done') {
+//         console.log('AI response:', buffer);
 
-        // send text to Simli
-        speakSimli(buffer);
+//         // send text to Simli
+//         speakSimli(buffer);
 
-        buffer = '';
-      }
-    };
+//         buffer = '';
+//       }
+//     };
 
-    const offer = await pc.createOffer();
-    await pc.setLocalDescription(offer);
+//     const offer = await pc.createOffer();
+//     await pc.setLocalDescription(offer);
 
-    const res = await fetch(
-      'https://api.openai.com/v1/realtime?model=gpt-realtime-mini',
-      {
-        method: 'POST',
-        body: offer.sdp,
-        headers: {
-          Authorization: `Bearer ${session.client_secret.value}`,
-          'Content-Type': 'application/sdp',
-        },
-      },
-    );
+//     const res = await fetch(
+//       'https://api.openai.com/v1/realtime?model=gpt-realtime-mini',
+//       {
+//         method: 'POST',
+//         body: offer.sdp,
+//         headers: {
+//           Authorization: `Bearer ${session.client_secret.value}`,
+//           'Content-Type': 'application/sdp',
+//         },
+//       },
+//     );
 
-    const answer = {
-      type: 'answer',
-      sdp: await res.text(),
-    };
+//     const answer = {
+//       type: 'answer',
+//       sdp: await res.text(),
+//     };
 
-    await pc.setRemoteDescription(answer);
-  }
+//     await pc.setRemoteDescription(answer);
+//   }
 
-  return null;
-}
+//   return null;
+// }

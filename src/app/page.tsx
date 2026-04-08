@@ -38,8 +38,8 @@ import {
   Building,
   MapPin,
 } from 'lucide-react';
-import AvatarGuide from '@/components/AvatarGuide';
-import RealtimeVoice from '@/components/RealtimeVoice';
+// import AvatarGuide from '@/components/AvatarGuide';
+// import RealtimeVoice from '@/components/RealtimeVoice';
 
 export default function Page() {
   const [state, setState] = useState('intro');
