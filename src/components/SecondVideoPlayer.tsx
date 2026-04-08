@@ -62,6 +62,7 @@ export function SecondVideoPlayer({ onComplete }: { onComplete: () => void }) {
       className="fixed bottom-8 right-8 z-40 w-64 h-36 md:w-80 md:h-48 bg-black rounded-2xl overflow-hidden shadow-2xl border-4 border-white"
     >
       <video
+        id="secondIntroVideo"
         ref={videoRef}
         src="./images/AI vid intro final.mp4"
         playsInline
